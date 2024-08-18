@@ -29,6 +29,12 @@
     cursor: pointer;
 }
 
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .restro-container {
    
     display: flex;
@@ -68,10 +74,6 @@
     
 }
 
-.body {
-    
-
-}
 
 
 .footer {
@@ -81,3 +83,5 @@
     margin-bottom: 20px;
     text-align: center;
   }
+
+ 

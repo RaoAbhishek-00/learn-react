@@ -4,7 +4,10 @@ import Shimmer from "./Shimmer";
 import { useEffect, useState } from "react";
 
 const Body = () => {
+
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filteredList, setFilterdList]=useState(listOfRestaurants)
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -16,23 +19,43 @@ const Body = () => {
     );
     const data = await response.json();
     // console.log(data);
-    
-    const apiData = data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants;
+
+    const apiData =
+      data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants;
 
     // console.log(apiData);
     setListOfRestaurants(apiData);
-    
-    
+    setFilterdList(apiData)
   };
 
-  if(listOfRestaurants.length === 0){
+  if (listOfRestaurants.length === 0) {
     return <Shimmer />;
   }
 
-  
   return (
     <div className="body">
-      <div className="search-container">Search</div>
+       
+
+      <div className="search-container">
+        <input
+          type="text"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        />
+
+        <button
+          onClick={() => {
+            const list = listOfRestaurants.filter((res) => 
+              res.info.name.toLowerCase().includes(searchText.toLowerCase())
+            );
+            setFilterdList(list);
+          }}
+        >
+          search
+        </button>
+      </div>
 
       <div className="filter">
         <button
@@ -40,7 +63,7 @@ const Body = () => {
           onClick={() => {
             // * Filter logic
             const filteredList = listOfRestaurants.filter(
-              (res) => res.data.avgRating > 4
+              (res) => res.info.avgRating > 4.5
             );
             setListOfRestaurants(filteredList);
           }}
@@ -50,15 +73,14 @@ const Body = () => {
       </div>
 
       <div className="restro-container">
-
-          {/* {console.log(listOfRestaurants)}
+        {/* {console.log(listOfRestaurants)}
           {console.log(typeof(listOfRestaurants))} */}
-          
-          {listOfRestaurants.map((item, index) =>(
-            <RestroCard key={item.info.id} resData={item.info}/>
-          ))}
-       
 
+        {filteredList.map((item, index) => (
+
+          <RestroCard key={item.info.id} resData={item.info} />
+
+        ))}
       </div>
     </div>
   );
