@@ -1,0 +1,87 @@
+
+
+.app {
+    display: block;
+    margin: 0 auto;
+  }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(206, 234, 234);
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    border-radius: 50%;
+    
+}
+
+.nav-items > ul {
+    display: flex;
+    list-style-type: none;
+    padding-right: 20px;
+}
+
+.nav-items > ul > li{
+    padding: 5px;
+    cursor: pointer;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.restro-container {
+   
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+
+}
+
+.restro-card{
+    width: 300px;
+    height: 400px;
+    
+    background-color: antiquewhite;
+    display: grid;
+    padding: 0px;
+}
+
+.restro-card > h3 {
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.restro-card:hover {
+    border: 1px solid black;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.restro-logo {
+    width: 250px;
+    height: 200px;
+    padding-left: 25px;
+    padding-top: 5px;
+    
+}
+
+
+
+.footer {
+    padding: 20px 10px;
+    border: 1px solid black;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+ 
