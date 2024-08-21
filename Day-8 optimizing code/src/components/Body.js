@@ -6,19 +6,29 @@ import { useEffect, useState } from "react";
 import useRestaurantsData from "../utils/useRestaurantsData";
 
 const Body = () => {
-
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
-  const [filteredList, setFilterdList]=useState(listOfRestaurants)
+  const [filteredList, setFilterdList] = useState(listOfRestaurants);
   const [searchText, setSearchText] = useState("");
 
-  const resData= useRestaurantsData();
+  const resData = useRestaurantsData();
 
-  useEffect(()=>{
+  useEffect(() => {
     setListOfRestaurants(resData);
-        setFilterdList(resData)
-  },[resData])
+    setFilterdList(resData);
+  }, [resData]);
 
-  
+  const searchBtn = () => {
+    const list = listOfRestaurants.filter((res) =>
+      res.info.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilterdList(list);
+  };
+
+  const filterBtn = () => {
+    // * Filter logic
+    const list = listOfRestaurants.filter((res) => res.info.avgRating > 4.5);
+    setFilterdList(list);
+  };
 
   if (listOfRestaurants.length === 0) {
     return <Shimmer />;
@@ -26,8 +36,6 @@ const Body = () => {
 
   return (
     <div className="body">
-       
-
       <div className="search-container">
         <input
           type="text"
@@ -37,40 +45,20 @@ const Body = () => {
           }}
         />
 
-        <button
-          onClick={() => {
-            const list = listOfRestaurants.filter((res) => 
-              res.info.name.toLowerCase().includes(searchText.toLowerCase())
-            );
-            setFilterdList(list);
-          }}
-        >
-          search
-        </button>
+        <button onClick={searchBtn}>search</button>
       </div>
 
       <div className="filter">
-        <button
-          className="filter-btn"
-          onClick={() => {
-            // * Filter logic
-            const list = listOfRestaurants.filter(
-              (res) => res.info.avgRating > 4.5
-            );
-            setFilterdList(list);
-          }}
-        >
+        <button className="filter-btn" onClick={filterBtn}>
           Top Rated Restaurants
         </button>
       </div>
 
       <div className="restro-container">
-      
-
         {filteredList.map((item, index) => (
-
-          <Link key={item.info.id} to={"/restaurant/"+item.info.id}><RestroCard  resData={item.info} /></Link>
-
+          <Link key={item.info.id} to={"/restaurant/" + item.info.id}>
+            <RestroCard resData={item.info} />
+          </Link>
         ))}
       </div>
     </div>
