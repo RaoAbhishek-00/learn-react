@@ -3,6 +3,7 @@ import RestroCard from "./RestroCard";
 import Shimmer from "./Shimmer";
 
 import { useEffect, useState } from "react";
+import useRestaurantsData from "../utils/useRestaurantsData";
 
 const Body = () => {
 
@@ -10,24 +11,14 @@ const Body = () => {
   const [filteredList, setFilterdList]=useState(listOfRestaurants)
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const resData= useRestaurantsData();
 
-  const fetchData = async () => {
-    const response = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.8466937&lng=80.94616599999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const data = await response.json();
-    // console.log(data);
+  useEffect(()=>{
+    setListOfRestaurants(resData);
+        setFilterdList(resData)
+  },[resData])
 
-    const apiData =
-      data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants;
-
-    // console.log(apiData);
-    setListOfRestaurants(apiData);
-    setFilterdList(apiData)
-  };
+  
 
   if (listOfRestaurants.length === 0) {
     return <Shimmer />;
@@ -74,8 +65,7 @@ const Body = () => {
       </div>
 
       <div className="restro-container">
-        {/* {console.log(listOfRestaurants)}
-          {console.log(typeof(listOfRestaurants))} */}
+      
 
         {filteredList.map((item, index) => (
 
