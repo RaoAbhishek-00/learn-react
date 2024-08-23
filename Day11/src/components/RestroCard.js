@@ -26,7 +26,7 @@ export const withVegLabel=(Restrocard)=>{
     (props)=>{
       return (
         <div>
-          <label>veg</label>
+          <label className="absolute bg-gray-700 text-white  ">veg</label>
           <Restrocard {...props} />
         </div>
       )

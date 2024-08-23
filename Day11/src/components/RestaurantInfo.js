@@ -3,12 +3,15 @@ import Shimmer from "./Shimmer";
 import { Link, useParams } from "react-router-dom";
 import RestaurantItem from "./RestaurantItem";
 import { API_URL } from "../utils/constants";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantInfo = () => {
   const [restaurantInfo, setRestaurantinfo] = useState(null);
   const [restaurantItem, setRestaurantItem] = useState([]);
+  const [restaurantCategories, setRestaurantCatagories] = useState([]);
   const { resId } = useParams();
 
+  const [showIndex, setShowIndex] = useState(0)
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -22,6 +25,10 @@ const RestaurantInfo = () => {
         json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card
           ?.card?.itemCards;
 
+      // console.log(json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.["@type"])
+      setRestaurantCatagories(
+        json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+      );
       setRestaurantinfo(apiData);
       setRestaurantItem(apiData2 || []);
     };
@@ -38,11 +45,17 @@ const RestaurantInfo = () => {
   //    console.log(restaurantItem[1].card.info.name)
 
   const menuItemsList = restaurantItem.map((item) => item.card.info);
-  //  console.log(menuItemsList);
+
+  const filteredCategories = restaurantCategories.filter(
+    (item) =>
+      item?.card?.card?.["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory"
+  );
+
+  console.log(filteredCategories);
 
   return (
     <div className="bg-slate-50">
-
       <div className="bg-gray-200 pt-2">
         <h3 className=" font-bold text-lg text-center pt-4 ">{name}</h3>
 
@@ -51,8 +64,19 @@ const RestaurantInfo = () => {
 
       <div className="restaurantItem">
         {/* { <RestaurantItem data = {menuItemsList} /> } */}
-        {menuItemsList.map((resItem) => (
+
+        {/* {menuItemsList.map((resItem) => (
           <RestaurantItem key={resItem.id} data={resItem} />
+        ))} */}
+
+        {filteredCategories.map((data,index) => (
+          // console.log(data.card.card.categories[0].itemCards[0].card.info)
+          <RestaurantCategory
+            key={data.card.card.title}
+            data={data.card.card}
+            showItems={index === showIndex  && true}
+            setShowIndex= {()=>{setShowIndex(index)}}
+          />
         ))}
       </div>
     </div>
