@@ -1,9 +1,11 @@
 import { CDN_URL } from "../utils/constants";
 
+
 export default  Restrocard = ({ resData }) => {
+
   
   return (
-    <div className="  w-56 border border-black   ">
+    <div className="  w-56 border border-black   " data-testid="restroCard">
       <img
         src={CDN_URL + resData.cloudinaryImageId}
         alt=""
