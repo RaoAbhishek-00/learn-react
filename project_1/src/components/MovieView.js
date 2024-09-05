@@ -6,11 +6,14 @@ import { useSelector } from 'react-redux'
 const MovieView = () => {
     const movies = useSelector(store => store.movieList.movies)
     if(!movies) return;
-    console.log(movies[0])
+    // console.log(movies[0])
+    const {title, overview, id} = movies[0];
+    
+
   return (
     <div>
-        <MovieDetail/>
-        <MovieTrailer/>
+        <MovieDetail title={title} overview={overview}/>
+        <MovieTrailer id={id}/>
     </div>
   )
 }

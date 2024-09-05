@@ -9,7 +9,7 @@ const Browse = () => {
 useFetchMovies();
 
   return (
-    <div>
+    <div className='absolute'>
      <MovieView/>
      <MovieLists/>
     </div>
