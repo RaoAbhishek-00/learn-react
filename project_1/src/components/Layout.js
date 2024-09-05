@@ -17,7 +17,7 @@ const Layout = () => {
       if (user) {
        
         const {email, uid, displayName} = user;
-        console.log(email);
+        
         dispatch(addUser({email:email,displayName:displayName,uid:uid}))
         navigate("/browse")
         // ...
