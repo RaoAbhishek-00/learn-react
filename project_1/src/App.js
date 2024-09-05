@@ -1,38 +1,43 @@
+import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-import Header from "./components/Header";
 import Login from "./components/Login";
 import Browse from "./components/Browse";
 import Layout from "./components/Layout";
+import { Provider, useDispatch } from "react-redux";
+import appStore from "./utils/appStore";
+
+
+
 
 
 function App() {
 
-  const appRouter = createBrowserRouter([ 
+ 
+  const appRouter = createBrowserRouter([
     {
-      path:"/",
-      element:<Layout/>,
-      children:[{
-        path:"/",
-        element:<Login/>,
-        
-      },
-      {
-        path:"/browse",
-        element:<Browse/>
-      },]
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Login />,
+        },
+        {
+          path: "/browse",
+          element: <Browse />,
+        },
+      ],
     },
-    
-  ])
+  ]);
+
+
 
   return (
-    <div className="App">
-
-    <RouterProvider router={appRouter} />
-
-     
-    </div>
+    <Provider store={appStore}>
+      <div className="App">
+        <RouterProvider router={appRouter} />
+      </div>
+    </Provider>
   );
 }
 

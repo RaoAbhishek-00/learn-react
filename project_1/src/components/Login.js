@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import validateUser from "../utils/validate";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {auth} from "../utils/firebase"
 
 
 
@@ -22,6 +24,40 @@ const Login = () => {
     const password = passwordref.current.value;
     const isValid = validateUser(email,password);
     setErrorMessage(isValid)
+    if (isValid) return;
+    console.log(email + password);
+
+    if (!isSignIn) {
+      //   //Sign up
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed up
+            const user = userCredential.user;
+            console.log(user);
+            console.log("sign upp");
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrorMessage(errorCode + " " + errorMessage);
+            // ..
+          });
+      }else {
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            console.log("sign in");
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrorMessage(errorCode + " " + errorMessage);
+          });
+      }
     
   }
 
@@ -33,8 +69,9 @@ const Login = () => {
           alt="background"
         />
       </div>
+      
       <div className="absolute my-36 mx-auto right-0 left-0 w-2/5   bg-black   ">
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <h1 className="text-white font-bold my-4 text-center text-xl">Sign In</h1>
           {!isSignIn && (
             <input
