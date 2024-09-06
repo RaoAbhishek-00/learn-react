@@ -11,7 +11,7 @@ const MovieView = () => {
     
 
   return (
-    <div className='bg-gradient-to-r from-black'>
+    <div className='bg-gradient-to-r from-black  bg-black'>
         <MovieDetail title={title} overview={overview}/>
         <MovieTrailer id={id}/>
     </div>
