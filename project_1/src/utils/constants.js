@@ -12,3 +12,5 @@ export const OPTIONS =  {
 }
 
 export const MOVIE_URL =  'https://api.themoviedb.org/3/movie/now_playing?page=1';
+
+export const POSTER_URL = "https://image.tmdb.org/t/p/w500/";

@@ -19,7 +19,7 @@ const Header = () => {
   }
   return (
     
-    <div className="flex justify-between absolute w-full h-32 bg-gradient-to-b from-black ">
+    <div className="flex justify-between absolute w-full h-32 bg-gradient-to-b from-black z-10 ">
       <div className="   ">
          
         <img
