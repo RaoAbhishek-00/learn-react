@@ -1,19 +1,30 @@
-import React from 'react'
-import useFetchMovies from '../hooks/useFetchMovies'
-import MovieView from './MovieView';
-import MovieLists from './MovieLists';
-
-
+import React from "react";
+import useFetchMovies from "../hooks/useFetchMovies";
+import MovieView from "./MovieView";
+import MovieLists from "./MovieLists";
+import { useSelector } from "react-redux";
+import GptSearchPage from "./GptSearchPage";
 
 const Browse = () => {
-useFetchMovies();
+  useFetchMovies();
+  const gptSearchView = useSelector(
+    (store) => store.gptSearchToggle.gptSearchView
+  );
+  
 
   return (
-    <div className='w-auto  '>
-     <MovieView/>
-     <MovieLists/>
+    <div className="w-auto  ">
+      {gptSearchView ? (
+        <GptSearchPage />
+      ) : (
+        <>
+          {" "}
+          <MovieView />
+          <MovieLists />
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Browse
+export default Browse;
